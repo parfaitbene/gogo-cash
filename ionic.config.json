@@ -1,0 +1,7 @@
+{
+  "name": "GoGoCash",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
