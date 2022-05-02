@@ -1,0 +1,12 @@
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Année</ion-label>
+        <ion-select [value]="currentYear">
+          <ion-select-option *ngFor="let year of years" [value]="year">{{ year }}</ion-select-option>
+        </ion-select>
+      </ion-item>      
+    </ion-col>
+  </ion-row>
+</ion-grid>

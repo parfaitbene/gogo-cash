@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { BudgetFormComponent } from '../tab3/budget/budget-form/budget-form.component';
 
 @Component({
   selector: 'app-tab1',
@@ -7,6 +9,13 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  constructor(public modalController: ModalController) {}
 
+  async addBudget(){
+    const modal = await this.modalController.create({
+      component: BudgetFormComponent,
+    });
+
+    return await modal.present();
+  }
 }
