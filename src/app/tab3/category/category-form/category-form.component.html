@@ -1,0 +1,34 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ getPageTitle() }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onSave()" [disabled]="myForm.invalid">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content fullscreen>
+  <form [formGroup]="myForm" class="ion-padding">
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Créer une nouvelle catégorie de transaction</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label position="floating">Nom</ion-label>
+        <ion-input formControlName="name" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Icône</ion-label>
+        <ion-input formControlName="icon" ></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

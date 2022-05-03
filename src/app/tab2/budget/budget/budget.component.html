@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title *ngIf="!activeBudget">
+      Budget
+    </ion-title>
+    <ion-title *ngIf="activeBudget">
+      Budget - {{ activeBudget.getFirstDayOfMonth()|date:'LLLL' }}
+    </ion-title>
+    <ion-buttons slot="end" *ngIf="budgets.length">
+      <ion-button id="nested-button">
+        Planifier
+        <!-- <ion-icon name="ellipsis-vertical-outline"></ion-icon> -->
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-popover trigger="nested-button" [dismissOnSelect]="true" *ngIf="budgets.length">
+  <ng-template>
+    <ion-content>
+      <ion-list lines="none">
+        <ion-item [button]="true" [detail]="false" (click)="onScheduleExpense()">
+          <ion-label>Les dépenses</ion-label>
+        </ion-item>
+        <ion-item [button]="true" [detail]="false" (click)="onScheduleIncome()">
+          <ion-label>Le revenu</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>
+
+<ion-content [fullscreen]="true" *ngIf="!budgets.length">
+  <app-home ></app-home>
+</ion-content>
+<ion-content [fullscreen]="true" *ngIf="budgets.length">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="onAddTransaction()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,24 +1,41 @@
 import { Budget } from "./budget.model";
+import { Category } from "./category.model";
+import { Transaction } from "./transaction.model";
 import { Unit } from "./unit.model";
 
 export class BudgetLine {
-    name: string;
-    type: string;
-    unit: Unit;
     quantity: number;
+    unit: Unit;
     amountPrevision: number;
-    amountReal: number;
     budget: Budget;
+    category: Category;
+    transactions: Transaction[] = [];
+    
+    constructor(quantity, unit, amountPrevision, category, budget) {
+        this.quantity = quantity;
+        this.unit = unit;
+        this.amountPrevision = amountPrevision;
+        this.category = category;
+        this.budget = budget;
+    }
 
     getVariation(){
-        return this.getAmountReal() - this.getAmountPrevision();
+        return this.getAmountRealSubTotal() - this.getAmountPrevisionSubTotal();
     }
 
-    getAmountReal(){
-        return this.quantity * this.amountReal;
+    getAmountRealSubTotal(){
+        let total = 0;
+
+        this.transactions.forEach(
+            (t: Transaction) => {
+                if(t.budgetLine == this && t.budgetLine.category == this.category){ total += t.amount; }
+            }
+        );
+
+        return total;
     }
 
-    getAmountPrevision(){
+    getAmountPrevisionSubTotal(){
         return this.quantity * this.amountPrevision;
     }
 }

@@ -1,3 +1,4 @@
+import { FLOW } from "../utils/utils";
 import { BudgetLine } from "./budget-line.model";
 import { Exercise } from "./exercise.model";
 import { Finance } from "./finance.model";
@@ -7,7 +8,6 @@ export class Budget implements Finance {
     year: number = (new Date()).getFullYear();
     month: number = (new Date()).getMonth();
     startBalance: number = 0;
-    endBalance: number;
     budgetLines: BudgetLine[] = [];
     transactions: Transaction[] = [];
 
@@ -17,24 +17,60 @@ export class Budget implements Finance {
         this.startBalance = startBalance;
     }
 
+    getFirstDayOfMonth(){
+        return new Date(this.year, this.month, 1);
+    }
+
     isCurrent() {
         return (new Date()).getMonth() == this.month && (new Date()).getFullYear() == this.year;
     }
 
     getTotalExpensivePrevision() {
-        return 0;
+        let total = 0;
+
+        this.budgetLines.forEach(line => {
+            if(line.category.flow == FLOW.OUT){
+                total += line.getAmountPrevisionSubTotal();
+            }
+        });
+
+        return total;
     }
 
     getTotalExpensiveReal() {
-        return 0;
+                let total = 0;
+
+        this.budgetLines.forEach(line => {
+            if(line.category.flow == FLOW.OUT){
+                total += line.getAmountRealSubTotal();
+            }
+        });
+        
+        return total;
     }
 
     getTotalIncomePrevision() {
-        return 0;
+        let total = 0;
+
+        this.budgetLines.forEach(line => {
+            if(line.category.flow == FLOW.IN){
+                total += line.getAmountPrevisionSubTotal();
+            }
+        });
+        
+        return total;
     }
 
     getTotalIncomeReal() {
-        return 0;
+        let total = 0;
+
+        this.budgetLines.forEach(line => {
+            if(line.category.flow == FLOW.IN){
+                total += line.getAmountRealSubTotal();
+            }
+        });
+        
+        return total;
     }
 
     getExpensiveVariation() {
@@ -43,5 +79,13 @@ export class Budget implements Finance {
 
     getIncomeVariation() {
         return this.getTotalIncomeReal() - this.getTotalIncomePrevision();
+    }
+
+    getEndBalance() {
+        return this.startBalance + this.getTotalIncomeReal() - this.getTotalExpensiveReal();
+    }
+
+    getVariation() {
+        return this.getEndBalance() - this.startBalance;
     }
 }

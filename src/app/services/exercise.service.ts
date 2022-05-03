@@ -7,15 +7,11 @@ export class ExerciseService {
 
   constructor() { }
 
-  getExerciseList(){
-    return this.getExerciseListFromDB().length?  this.getExerciseListFromDB() : this.generateExerciseList();
-  }
-
-  private getExerciseListFromDB(){
+  getExerciseListFromDB(){
     return [];
   }
 
-  private generateExerciseList(date: Date = new Date()){
+  generateExerciseList(date: Date = new Date()){
     let years = [];
 
     for(let year = date.getFullYear() - 4; year <= date.getFullYear() + 4; year++){ years.push(year); }

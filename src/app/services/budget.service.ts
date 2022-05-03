@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { BudgetLine } from '../models/budget-line.model';
 import { Budget } from '../models/budget.model';
 
 @Injectable({
@@ -16,15 +17,30 @@ export class BudgetService {
   }
 
   getActive() {
-    this.budgetList.find(b => {
+    return this.budgetList.find(b => {
       return b.isCurrent() || false;
     })
   }
   
-  save(budget: Budget){
-    this.budgetList.push(budget);
-    this.emitBudgetList();
+  saveBudget(budget: Budget){
+    return new Promise(
+      (resolve, reject) => {
+        this.budgetList.push(budget);
+        this.emitBudgetList();
+
+        resolve(budget);
+      }
+    );
   }
 
-  persist(){}
+  saveBudgetLine(budgetLine: BudgetLine){
+    return new Promise(
+      (resolve, reject) => {
+        budgetLine.budget.budgetLines.push(budgetLine);
+        this.emitBudgetList();
+
+        resolve(budgetLine);
+      }
+    );
+  }
 }

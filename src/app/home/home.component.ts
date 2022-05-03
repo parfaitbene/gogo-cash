@@ -1,15 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { BudgetFormComponent } from '../tab2/budget/budget-form/budget-form.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
-  @Input() name: string;
-  
-  constructor() { }
+export class HomeComponent {
 
-  ngOnInit() {}
+  constructor(
+    public modalController: ModalController
+  ) { }
 
+  async onAddBudget(){
+    const modal = await this.modalController.create({
+      component: BudgetFormComponent,
+    });
+
+    return await modal.present();
+  }
 }

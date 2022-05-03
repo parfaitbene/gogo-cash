@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController, NavController, AlertController } from '@ionic/angular';
 import { Budget } from 'src/app/models/budget.model';
 import { BudgetService } from 'src/app/services/budget.service';
+import { ExerciseService } from 'src/app/services/exercise.service';
 
 @Component({
   selector: 'app-budget-form',
@@ -11,7 +12,9 @@ import { BudgetService } from 'src/app/services/budget.service';
 })
 export class BudgetFormComponent implements OnInit {
   myForm: FormGroup;
+  currentDate = new Date();
   budget: Budget;
+  years: string[];
 
   constructor(
     public modalController: ModalController,
@@ -19,10 +22,14 @@ export class BudgetFormComponent implements OnInit {
     public budgetService: BudgetService,
     private navController: NavController,
     private alertController: AlertController,
+    public exerciseSercice: ExerciseService
 
-  ) { }
+  ) {
+    this.budget = new Budget(this.currentDate.getFullYear(), this.currentDate.getMonth(), 0);
+   }
 
   ngOnInit() {
+    this.years = this.exerciseSercice.generateExerciseList();
     this.initForm();
   }
 
@@ -30,7 +37,7 @@ export class BudgetFormComponent implements OnInit {
     this.myForm = this.formBuilder.group({
       year: [this.budget.year? this.budget.year : '', Validators.required],
       month: [this.budget.month? this.budget.month : '', Validators.required],
-      startBalance: [this.budget.startBalance? this.budget.startBalance : '', Validators.email],
+      startBalance: [this.budget.startBalance? this.budget.startBalance : 0],
     });
   }
 
@@ -38,20 +45,21 @@ export class BudgetFormComponent implements OnInit {
     let formValue = this.myForm.value;
     this.budget = new Budget(formValue['year'], formValue['month'], formValue['startBalance']);
     
-    // this.budgetService.save(this.budget).then(
-    //   (budget: Budget) => {
-    //     this.navController.navigateForward(['tabs', 'tab2']);
-    //   },
-    //   async () => {
-    //     const alert = await this.alertController.create({
-    //       header: 'Erreur',
-    //       message: 'Une erreur s\'est produite.',
-    //       buttons: ['OK']
-    //     });
+    this.budgetService.saveBudget(this.budget).then(
+      (budget: Budget) => {
+        this.navController.navigateForward(['tabs', 'tab2']);
+        this.modalController.dismiss();
+      },
+      async () => {
+        const alert = await this.alertController.create({
+          header: 'Erreur',
+          message: 'Une erreur s\'est produite.',
+          buttons: ['OK']
+        });
     
-    //     await alert.present();
-    //   }
-    // );
+        await alert.present();
+      }
+    );
   }
 
   dismissModal() {

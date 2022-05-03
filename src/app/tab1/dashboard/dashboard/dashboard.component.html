@@ -1,4 +1,20 @@
-<ion-grid>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      GoGo-Cash
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onAddBudget()">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="!budgets.length">
+  <app-home ></app-home>
+</ion-content>
+<ion-content [fullscreen]="true" *ngIf="budgets.length">
   <ion-row>
     <ion-col>
       <ion-item>
@@ -6,7 +22,14 @@
         <ion-select [value]="currentYear">
           <ion-select-option *ngFor="let year of years" [value]="year">{{ year }}</ion-select-option>
         </ion-select>
-      </ion-item>      
-    </ion-col>
-  </ion-row>
-</ion-grid>
+      </ion-item> 
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p class="ion-text-center ion-padding">
+          Voter tableau de bord est vide, commencez par enregistrer une trasaction.
+        </p>
+      </ion-col>
+    </ion-row>
+</ion-content>
