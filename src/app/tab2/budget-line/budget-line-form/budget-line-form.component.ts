@@ -69,7 +69,7 @@ export class BudgetLineFormComponent implements OnInit {
       formValue['quantity'], 
       this.unitService.getUnitById(+formValue['unitId']), 
       formValue['amountPrevision'], 
-      this.categoryService.getUnitById(+formValue['categoryId']),
+      this.unitService.getUnitById(+formValue['categoryId']),
       this.activeBudget
       );
     

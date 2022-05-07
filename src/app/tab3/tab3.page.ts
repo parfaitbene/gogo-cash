@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { BudgetListComponent } from '../tab2/budget/budget-list/budget-list.component';
 import { FLOW } from '../utils/utils';
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import { UnitListComponent } from './unit/unit-list/unit-list.component';
@@ -14,6 +15,14 @@ export class Tab3Page {
   constructor(
     public modalController: ModalController,
   ) {}
+
+  async onBudget(){
+    let modal = await this.modalController.create({
+      component: BudgetListComponent,
+    });
+    
+    return await modal.present();
+  }
 
   async onExpenseCategory(){
     let modal = await this.modalController.create({

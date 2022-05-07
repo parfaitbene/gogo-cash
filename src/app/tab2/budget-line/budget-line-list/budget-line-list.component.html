@@ -5,7 +5,7 @@
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>{{ getPageTitle() }} - Budget {{ activeBudget.getFirstDayOfMonth()|date:'LLLL' }}</ion-title>
+    <ion-title>{{ getPageTitle() }} - {{ activeBudget.getFirstDayOfMonth()|date:'LLLL' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 

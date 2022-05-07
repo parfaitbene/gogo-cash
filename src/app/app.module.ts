@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -11,12 +12,14 @@ import { BudgetService } from './services/budget.service';
 import { CategoryService } from './services/category.service';
 import { ExerciseService } from './services/exercise.service';
 import { UnitService } from './services/unit.service';
+import { TransactionService } from './services/transaction.service';
+import { DatabaseService } from './services/database.service';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule],
-  providers: [ExerciseService, BudgetService, UnitService, CategoryService, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+  providers: [ExerciseService, BudgetService, UnitService, CategoryService, TransactionService, DatabaseService, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

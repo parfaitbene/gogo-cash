@@ -4,6 +4,7 @@ import { Transaction } from "./transaction.model";
 import { Unit } from "./unit.model";
 
 export class BudgetLine {
+    id: number;
     quantity: number;
     unit: Unit;
     amountPrevision: number;

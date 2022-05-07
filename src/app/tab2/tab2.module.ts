@@ -18,6 +18,7 @@ import { UnitFormComponent } from '../tab3/unit/unit-form/unit-form.component';
 import { CategoryListComponent } from '../tab3/category/category-list/category-list.component';
 import { CategoryFormComponent } from '../tab3/category/category-form/category-form.component';
 import { BudgetLineFormComponent } from './budget-line/budget-line-form/budget-line-form.component';
+import { BudgetMenuComponent } from './budget/budget-menu/budget-menu.component';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { BudgetLineFormComponent } from './budget-line/budget-line-form/budget-l
     BudgetListComponent,
     BudgetLineFormComponent,
     BudgetLineListComponent,
+    BudgetMenuComponent,
     TransactionFormComponent,
     TransactionListComponent,
     CategoryListComponent,

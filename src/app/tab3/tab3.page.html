@@ -9,6 +9,14 @@
 <ion-content [fullscreen]="true">
   <ion-list>
     <ion-item-divider>
+      <ion-label>Gestion des budgets</ion-label>
+    </ion-item-divider>
+    <ion-item (click)="onBudget()">
+      <ion-label>
+        Budgets
+      </ion-label>
+    </ion-item>
+    <ion-item-divider>
       <ion-label>Catégories de dépenses et revenus</ion-label>
     </ion-item-divider>
     <ion-item (click)="onExpenseCategory()">

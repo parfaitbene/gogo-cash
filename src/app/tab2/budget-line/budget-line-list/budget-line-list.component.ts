@@ -33,7 +33,7 @@ export class BudgetLineListComponent implements OnInit {
       componentProps: {
         'flow': this.flow,
         'activeBudget': this.activeBudget,
-        'budgetLine': new BudgetLine(1, new Unit('', ''), 0, new Category('', this.flow, ''), this.activeBudget)
+        'budgetLine': new BudgetLine(0, new Unit('', ''), 0, new Category('', this.flow, ''), this.activeBudget)
       }
     });
 
@@ -56,9 +56,9 @@ export class BudgetLineListComponent implements OnInit {
   getPageTitle() {
     switch (this.flow) {
       case FLOW.IN:
-        return 'Revenus';
+        return 'Prévisions revenu';
       case FLOW.OUT:
-        return 'Dépenses';
+        return 'Prévisions dépenses';
       default:
         return 'Planification';
     }

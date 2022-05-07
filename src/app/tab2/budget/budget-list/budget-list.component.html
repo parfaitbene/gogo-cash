@@ -1,3 +1,30 @@
-<p>
-  budget-list works!
-</p>
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Budgets</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" *ngIf="!budgets.length">
+  <app-home ></app-home>
+</ion-content>
+<ion-content fullscreen *ngIf="budgets.length">
+  <ion-list>
+    <ion-item *ngFor="let budget of budgets" (click)="onOpenBudget(budget)">
+      <ion-label>
+        Budget - {{ budget.getFirstDayOfMonth()|date:'LLLL' }} {{ budget.year }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="onAddBudget()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

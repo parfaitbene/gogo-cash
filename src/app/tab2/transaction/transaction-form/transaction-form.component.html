@@ -1,3 +1,40 @@
-<p>
-  transaction-form works!
-</p>
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ getPageTitle() }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onSave()" [disabled]="myForm.invalid">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content fullscreen class="ion-padding">
+  <form [formGroup]="myForm">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Catégorie</ion-label>
+        <ion-select formControlName="budgetLineId">
+          <ion-select-option *ngFor="let budgetLine of budget.budgetLines" [value]="budgetLine.id">{{ budgetLine.category.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Montant</ion-label>
+        <ion-input type="number" formControlName="amount" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked" id="open-modal">Date</ion-label>
+        <ion-datetime formControlName="date" presentation="date"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-textarea formControlName="description" rows="5" placeholder="Entrez une description de votre transaction ici..."></ion-textarea>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

@@ -1,12 +1,11 @@
-import { FLOW } from "../utils/utils";
+import { FLOW, getFormDefaultDateFromDate } from "../utils/utils";
 import { BudgetLine } from "./budget-line.model";
-import { Exercise } from "./exercise.model";
 import { Finance } from "./finance.model";
 import { Transaction } from "./transaction.model";
 
 export class Budget implements Finance {
-    year: number = (new Date()).getFullYear();
-    month: number = (new Date()).getMonth();
+    year: number;
+    month: number;
     startBalance: number = 0;
     budgetLines: BudgetLine[] = [];
     transactions: Transaction[] = [];
@@ -19,6 +18,10 @@ export class Budget implements Finance {
 
     getFirstDayOfMonth(){
         return new Date(this.year, this.month, 1);
+    }
+
+    formatDateToFormData(){
+        return getFormDefaultDateFromDate(new Date(this.year, this.month, 1));
     }
 
     isCurrent() {

@@ -1,39 +1,36 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="isOpenFromList">
+      <ion-button (click)="dismissModal()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title *ngIf="!activeBudget">
       Budget
     </ion-title>
-    <ion-title *ngIf="activeBudget">
+    <ion-title *ngIf="activeBudget" (click)="onUpdateBudget()">
       Budget - {{ activeBudget.getFirstDayOfMonth()|date:'LLLL' }}
     </ion-title>
-    <ion-buttons slot="end" *ngIf="budgets.length">
-      <ion-button id="nested-button">
-        Planifier
-        <!-- <ion-icon name="ellipsis-vertical-outline"></ion-icon> -->
+    <ion-buttons slot="end" *ngIf="activeBudget">
+      <ion-button (click)="onBudgetMenu()">
+        <!-- Planifier -->
+        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-popover trigger="nested-button" [dismissOnSelect]="true" *ngIf="budgets.length">
-  <ng-template>
-    <ion-content>
-      <ion-list lines="none">
-        <ion-item [button]="true" [detail]="false" (click)="onScheduleExpense()">
-          <ion-label>Les dépenses</ion-label>
-        </ion-item>
-        <ion-item [button]="true" [detail]="false" (click)="onScheduleIncome()">
-          <ion-label>Le revenu</ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ng-template>
-</ion-popover>
-
-<ion-content [fullscreen]="true" *ngIf="!budgets.length">
-  <app-home ></app-home>
+<ion-content [fullscreen]="true" *ngIf="!activeBudget">
+  <div class="ion-padding ion-text-center">
+    <img src="assets/img/budget.png" />
+    <h2>Budget de {{ currentDate|date:'LLLL' }}</h2>
+    <p>
+      Créez un budget pour le mois en cours. Planifiez votre revenu et vos dépenses. Enregistrez vos différentes transactions.
+    </p>
+    <p><ion-button color="tertiary" (click)="onAddBudget()">Crer le budget de {{ currentDate|date:'LLLL' }}</ion-button></p>
+  </div>
 </ion-content>
-<ion-content [fullscreen]="true" *ngIf="budgets.length">
+<ion-content [fullscreen]="true" *ngIf="activeBudget">
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="onAddTransaction()">
       <ion-icon name="add"></ion-icon>

@@ -15,12 +15,6 @@ export class CategoryService {
     this.categoryListSubject.next(this.categoryList);
   }
 
-  getUnitById(id: number) {
-    // To implement
-    // return corresponding category in DB
-    return new Category('', '', '');
-  }
-
   getCategoriesByFlow(flow) {
     return new Promise(
       (resolve, reject) => {

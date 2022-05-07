@@ -1,9 +1,9 @@
 import { Budget } from "./budget.model";
 import { Finance } from "./finance.model";
 
-export class Exercise implements Finance {
-    name: string;
-    code: string;
+export abstract class Exercise implements Finance {
+    // name: string;
+    // code: string;
     year: string;
     state: string;
     budgets: Budget[] = [];

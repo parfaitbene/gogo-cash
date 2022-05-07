@@ -1,18 +1,25 @@
+import { FLOW, getFormDefaultDateFromDate } from "../utils/utils";
 import { BudgetLine } from "./budget-line.model";
 
 export class Transaction {
-    type: string;
-    name: string;
-    desctiption: string;
-    date: Date;
-    amount: number;
+    id: number;
     budgetLine: BudgetLine;
+    amount: number;
+    date: Date;
+    description: string;
 
-    constructor(name: string, date: Date, amount: number, description: string, type: string){
-        this.name = name;
-        this.date = date;
+    constructor(budgetLine: BudgetLine, amount: number, date: Date, description: string){
+        this.budgetLine = budgetLine;
         this.amount = amount;
-        this.desctiption = description;
-        this.type = type;
+        this.date = date;
+        this.description = description;
+    }
+
+    getFlow() {
+        return (this.budgetLine.category.flow == FLOW.IN)? FLOW.IN : FLOW.OUT;
+    }
+
+    formatDateToFormData() {
+        return getFormDefaultDateFromDate(new Date(this.date));
     }
 }
