@@ -14,12 +14,14 @@ import { ExerciseService } from './services/exercise.service';
 import { UnitService } from './services/unit.service';
 import { TransactionService } from './services/transaction.service';
 import { DatabaseService } from './services/database.service';
+import { StorageService } from './services/storage.service';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
-  providers: [ExerciseService, BudgetService, UnitService, CategoryService, TransactionService, DatabaseService, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, IonicStorageModule.forRoot()],
+  providers: [ExerciseService, BudgetService, UnitService, CategoryService, TransactionService, StorageService, DatabaseService, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
