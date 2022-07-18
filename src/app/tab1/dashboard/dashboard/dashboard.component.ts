@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   currentBudget: Budget;
   budgets: Budget[];
   budgetsSubscription: Subscription;
+  yearsListSubscription: Subscription;
 
 
   constructor(
@@ -26,15 +27,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
+    this.exerciseSercice.getYearsFromDB();
+
+    this.yearsListSubscription = this.exerciseSercice.yearsListSubject.subscribe(
+      (years: string[]) => {
+        this.years = years;
+      }
+    );
+    this.exerciseSercice.yearsListSubject.next(this.years);
+
     this.budgetsSubscription = this.budgetService.budgetListSubject.subscribe(
       (budgets: Budget[]) => {
         this.budgets = budgets;
       }
     );
     this.budgetService.emitBudgetList();
-    
-    this.years = this.exerciseSercice.generateExerciseList();
     this.currentBudget = this.budgetService.getActive();
+  }
+
+  ionViewWillEnter(){
+    this.budgetService.getBudgetsFromDB();
+    this.exerciseSercice.getYearsFromDB();
   }
 
   async onAddBudget(){
@@ -47,5 +60,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.budgetsSubscription.unsubscribe();
+    this.yearsListSubscription.unsubscribe();
   }
 }

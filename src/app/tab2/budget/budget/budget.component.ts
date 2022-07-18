@@ -7,6 +7,7 @@ import { Category } from 'src/app/models/category.model';
 import { Transaction } from 'src/app/models/transaction.model';
 import { Unit } from 'src/app/models/unit.model';
 import { BudgetService } from 'src/app/services/budget.service';
+import { DatabaseService } from 'src/app/services/database.service';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { FLOW } from 'src/app/utils/utils';
 import { BudgetLineListComponent } from '../../budget-line/budget-line-list/budget-line-list.component';
@@ -31,9 +32,12 @@ export class BudgetComponent implements OnInit {
     private budgetService: BudgetService,
     public actionSheetController: ActionSheetController,
     public modalController: ModalController,
+    private databaseService: DatabaseService,
   ) { }
 
   ngOnInit(): void {
+    this.budgetService.getBudgetsFromDB();
+
     this.budgetsSubscription = this.budgetService.budgetListSubject.subscribe(
       (budgets: Budget[]) => {
         this.budgets = budgets;

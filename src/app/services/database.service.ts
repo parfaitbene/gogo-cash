@@ -6,7 +6,7 @@ import { BehaviorSubject, from, of, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { JsonSQLite } from '@capacitor-community/sqlite';
 import { db } from 'src/app/utils/db';
-import { CapacitorSQLite,  } from '@capacitor-community/sqlite';
+import { CapacitorSQLite  } from '@capacitor-community/sqlite';
 import { Platform } from '@ionic/angular';
 import { StorageService } from './storage.service';
  
@@ -17,11 +17,19 @@ const DB_NAME_KEY = 'db_name';
   providedIn: 'root'
 })
 export class DatabaseService {
-  // dbReady = new Subject<boolean>();
+  dbReady = new BehaviorSubject(false);
   dbName = '';
  
-  constructor(private http: HttpClient, private alertCtrl: AlertController, public platform: Platform, public storageService: StorageService) { }
- 
+  constructor(
+    private http: HttpClient, 
+    private alertCtrl: AlertController, 
+    public platform: Platform, 
+    public storageService: StorageService
+  ) 
+  {
+
+  }
+  
   async init(): Promise<void> {
     if (this.platform.is('android')) {
       try {
@@ -57,7 +65,7 @@ export class DatabaseService {
           }
         }
       );
-      // this.dbReady.next(true);
+      this.dbReady.next(true);
     }
   }
  
@@ -84,9 +92,14 @@ export class DatabaseService {
             } else {
               CapacitorSQLite.setSyncDate({ syncdate: '' + new Date().getTime() })
             }
-            // this.dbReady.next(true);
+            this.dbReady.next(true);
           }
         }
       );
+  }
+
+  getDBName() 
+  {
+    return db.database;
   }
 }

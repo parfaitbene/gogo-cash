@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Budget } from 'src/app/models/budget.model';
 import { Category } from 'src/app/models/category.model';
 import { Unit } from 'src/app/models/unit.model';
 import { BudgetService } from 'src/app/services/budget.service';
+import { DatabaseService } from 'src/app/services/database.service';
 import { BudgetFormComponent } from '../budget-form/budget-form.component';
 import { BudgetComponent } from '../budget/budget.component';
 
@@ -13,7 +14,7 @@ import { BudgetComponent } from '../budget/budget.component';
   templateUrl: './budget-list.component.html',
   styleUrls: ['./budget-list.component.scss'],
 })
-export class BudgetListComponent implements OnInit {
+export class BudgetListComponent implements OnInit, OnDestroy {
   budgets: Budget[] = [];
   budgetsSubscription: Subscription;
 
@@ -23,13 +24,15 @@ export class BudgetListComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.budgetService.getBudgetsFromDB();
+
     this.budgetsSubscription = this.budgetService.budgetListSubject.subscribe(
       (budgets: Budget[]) => {
         this.budgets = budgets;
       }
     );
     this.budgetService.emitBudgetList();
-   }
+  }
 
   async onAddBudget() {
     let modal = await this.modalController.create({

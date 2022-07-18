@@ -35,6 +35,11 @@ export class BudgetFormComponent implements OnInit {
     this.initForm();
   }
 
+  ionViewWillLeave(){
+    this.budgetService.getBudgetsFromDB();
+    this.exerciseSercice.getYearsFromDB();
+  }
+
   initForm() {
     let defaultDate = (this.budget.month && this.budget.year)? this.budget.formatDateToFormData() : getFormDefaultDateFromDate();
     
@@ -43,8 +48,6 @@ export class BudgetFormComponent implements OnInit {
       date: [defaultDate, Validators.required]
     });
   }
-
- 
 
   async onSave() {
     let formValue = this.myForm.value;

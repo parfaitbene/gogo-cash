@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: 'www',
   bundledWebRuntime: false,
   server: {
-    url: "http://192.168.225.88:8100",
+    url: "http://192.168.43.30:8100",
     cleartext: true
   },
 };
